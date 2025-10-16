@@ -18,10 +18,5 @@ git clone https://github.com/leonardespi/automation-testers-handbook-demo.git
 # Execute your test case
 ```
 
-## Usage
-```
-node cli.js --help
-```
-
 ## License
 MIT
