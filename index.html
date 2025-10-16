@@ -1,0 +1,958 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive demonstrations of modern web automation testing concepts with working examples for Selenium, Playwright, and Cypress.">
+    <title>The Modern Web Automation Tester's Handbook – Interactive Demos</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>The Modern Web Automation Tester's Handbook</h1>
+        <p class="subtitle">Interactive Demos for Selenium, Playwright & Cypress</p>
+    </header>
+
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="#section-1">1. The Automation Tester's Canvas</a></li>
+            <li><a href="#section-2">2. Complex Architectures</a></li>
+            <li><a href="#section-3">3. Common Challenges</a></li>
+            <li><a href="#section-4">4. Competency Checklist</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- SECTION 1: THE AUTOMATION TESTER'S CANVAS -->
+        <section id="section-1" aria-labelledby="heading-section-1">
+            <h2 id="heading-section-1">1. The Automation Tester's Canvas</h2>
+
+            <!-- 1.1 Basic Interactable Elements -->
+            <article id="basic-elements" aria-labelledby="heading-basic-elements">
+                <h3 id="heading-basic-elements">1.1 Basic Interactable Elements</h3>
+
+                <div class="demo-box">
+                    <h4>Text Inputs</h4>
+                    <form id="form-basic-inputs">
+                        <label for="input-text">Username:</label>
+                        <input type="text" id="input-text" name="username" data-testid="input-text" placeholder="Enter username">
+
+                        <label for="input-password">Password:</label>
+                        <input type="password" id="input-password" name="password" data-testid="input-password" placeholder="Enter password">
+
+                        <label for="input-email">Email:</label>
+                        <input type="email" id="input-email" name="email" data-testid="input-email" placeholder="user@example.com">
+                    </form>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="input-text"]
+XPath: //input[@data-testid="input-text"]
+Action: sendKeys("testuser")
+Assert: value attribute equals "testuser"
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Checkboxes & Radio Buttons</h4>
+                    <form id="form-selections">
+                        <fieldset>
+                            <legend>Preferences</legend>
+                            <label>
+                                <input type="checkbox" name="terms" data-testid="chk-terms">
+                                I agree to terms
+                            </label>
+                            <label>
+                                <input type="checkbox" name="newsletter" data-testid="chk-newsletter">
+                                Subscribe to newsletter
+                            </label>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Plan Selection</legend>
+                            <label>
+                                <input type="radio" name="plan" value="basic" data-testid="radio-plan-basic">
+                                Basic
+                            </label>
+                            <label>
+                                <input type="radio" name="plan" value="pro" data-testid="radio-plan-pro">
+                                Pro
+                            </label>
+                            <label>
+                                <input type="radio" name="plan" value="enterprise" data-testid="radio-plan-enterprise">
+                                Enterprise
+                            </label>
+                        </fieldset>
+                    </form>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="chk-terms"]
+XPath: //input[@data-testid="radio-plan-pro"]
+Action: click()
+Assert: checked property is true
+Radio: Only one in group can be selected
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Buttons & Links</h4>
+                    <button type="button" data-testid="btn-primary">Primary Action</button>
+                    <button type="button" data-testid="btn-secondary" disabled>Disabled Button</button>
+                    <a href="#section-2" data-testid="link-docs">Documentation Link</a>
+                    <a href="https://example.com" data-testid="link-external" target="_blank" rel="noopener">External Link</a>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="btn-primary"]
+XPath: //button[@data-testid="btn-primary"]
+Action: click()
+Assert: enabled state, href attribute for links
+Note: Check disabled attribute for btn-secondary
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Images</h4>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23000'/%3E%3Ctext x='50' y='55' font-size='16' fill='%23fff' text-anchor='middle'%3ELOGO%3C/text%3E%3C/svg%3E" 
+                         alt="Company Logo" 
+                         data-testid="img-logo" 
+                         width="100" 
+                         height="100">
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="img-logo"]
+XPath: //img[@data-testid="img-logo"]
+Assert: alt attribute, src attribute, isDisplayed()
+Accessibility: Always verify alt text presence
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 1.2 Navigation & Structure -->
+            <article id="navigation-structure" aria-labelledby="heading-navigation">
+                <h3 id="heading-navigation">1.2 Navigation & Structure</h3>
+
+                <div class="demo-box">
+                    <h4>Menu with Submenu</h4>
+                    <nav aria-label="Demo menu">
+                        <ul class="menu" data-testid="menu-root">
+                            <li>
+                                <button type="button" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false" 
+                                        data-testid="menu-btn-advanced"
+                                        class="menu-trigger">
+                                    Advanced ▼
+                                </button>
+                                <ul class="submenu" data-testid="submenu-advanced" hidden>
+                                    <li><a href="#iframe-demo" data-testid="submenu-link-iframe">Iframes</a></li>
+                                    <li><a href="#shadow-demo" data-testid="submenu-link-shadow">Shadow DOM</a></li>
+                                    <li><a href="#canvas-demo" data-testid="submenu-link-canvas">Canvas</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="menu-btn-advanced"]
+Action: click() or hover (JS trigger)
+Wait: aria-expanded="true"
+Submenu CSS: [data-testid="submenu-advanced"]
+Assert: submenu visibility, not hidden attribute
+Keyboard: Enter/Space to open, Escape to close
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Tabs</h4>
+                    <div class="tabs" role="tablist" aria-label="Content sections">
+                        <button role="tab" 
+                                aria-selected="true" 
+                                aria-controls="panel-forms" 
+                                data-testid="tab-forms"
+                                id="tab-forms">
+                            Forms
+                        </button>
+                        <button role="tab" 
+                                aria-selected="false" 
+                                aria-controls="panel-tables" 
+                                data-testid="tab-tables"
+                                id="tab-tables">
+                            Tables
+                        </button>
+                        <button role="tab" 
+                                aria-selected="false" 
+                                aria-controls="panel-lists" 
+                                data-testid="tab-lists"
+                                id="tab-lists">
+                            Lists
+                        </button>
+                    </div>
+
+                    <div id="panel-forms" role="tabpanel" aria-labelledby="tab-forms" data-testid="panel-forms">
+                        <p>Forms panel content. Use explicit waits for panel visibility.</p>
+                    </div>
+                    <div id="panel-tables" role="tabpanel" aria-labelledby="tab-tables" data-testid="panel-tables" hidden>
+                        <p>Tables panel content.</p>
+                    </div>
+                    <div id="panel-lists" role="tabpanel" aria-labelledby="tab-lists" data-testid="panel-lists" hidden>
+                        <p>Lists panel content.</p>
+                    </div>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="tab-tables"]
+Action: click()
+Wait: aria-selected="true" on clicked tab
+Assert: panel visibility [data-testid="panel-tables"]
+Sync: Wait for hidden attribute removal
+Keyboard: Arrow keys navigate, Enter/Space activate
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Accordion</h4>
+                    <div class="accordion">
+                        <button type="button" 
+                                aria-expanded="false" 
+                                aria-controls="accordion-content-sync" 
+                                data-testid="accordion-sync"
+                                class="accordion-trigger">
+                            Synchronization Strategies
+                        </button>
+                        <div id="accordion-content-sync" data-testid="accordion-content-sync" hidden>
+                            <p>Always use explicit waits. Target specific elements with data-testid. Avoid static sleeps.</p>
+                        </div>
+
+                        <button type="button" 
+                                aria-expanded="false" 
+                                aria-controls="accordion-content-locators" 
+                                data-testid="accordion-locators"
+                                class="accordion-trigger">
+                            Locator Best Practices
+                        </button>
+                        <div id="accordion-content-locators" data-testid="accordion-content-locators" hidden>
+                            <p>Prefer data-testid, then id, then semantic selectors. Avoid brittle CSS classes.</p>
+                        </div>
+                    </div>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="accordion-sync"]
+Action: click()
+Wait: aria-expanded="true"
+Assert: content visibility [data-testid="accordion-content-sync"]
+Sync: Wait for hidden attribute removal
+Keyboard: Enter/Space to toggle
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Modal Dialog</h4>
+                    <button type="button" data-testid="btn-open-modal">Open Modal</button>
+
+                    <div id="modal-root" 
+                         data-testid="modal-root" 
+                         role="dialog" 
+                         aria-modal="true" 
+                         aria-labelledby="modal-title"
+                         hidden>
+                        <div class="modal-content">
+                            <h3 id="modal-title">Confirm Action</h3>
+                            <p>This is a modal dialog. Focus is trapped inside.</p>
+                            <button type="button" data-testid="btn-confirm-modal">Confirm</button>
+                            <button type="button" data-testid="btn-close-modal">Close</button>
+                        </div>
+                    </div>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="btn-open-modal"]
+Action: click()
+Wait: [data-testid="modal-root"] visible (no hidden attr)
+Assert: aria-modal="true", focus trapped
+Close: [data-testid="btn-close-modal"] or Escape key
+Sync: Wait for modal hidden attribute after close
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 1.3 Data Components -->
+            <article id="data-components" aria-labelledby="heading-data">
+                <h3 id="heading-data">1.3 Data Components</h3>
+
+                <div class="demo-box">
+                    <h4>Form with Validation</h4>
+                    <form id="form-login" data-testid="form-login">
+                        <label for="login-username">Username:</label>
+                        <input type="text" 
+                               id="login-username" 
+                               name="username" 
+                               data-testid="input-login-username" 
+                               required>
+
+                        <label for="login-password">Password:</label>
+                        <input type="password" 
+                               id="login-password" 
+                               name="password" 
+                               data-testid="input-login-password" 
+                               required 
+                               minlength="6">
+
+                        <button type="submit" data-testid="btn-submit-login">Submit</button>
+                    </form>
+
+                    <div data-testid="spinner" class="spinner" hidden>Loading...</div>
+                    <div data-testid="alert-success" class="alert alert-success" hidden>Login successful!</div>
+                    <div data-testid="alert-error" class="alert alert-error" hidden>Login failed. Please check your credentials.</div>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="form-login"]
+Action: Fill inputs, click submit
+Wait: [data-testid="spinner"] visible (1200ms fixed)
+Then: [data-testid="spinner"] hidden
+Assert: [data-testid="alert-success"] visible
+Error case: [data-testid="alert-error"] visible
+Sync: Explicit wait for spinner → alert transition
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Table Traversal</h4>
+                    <table id="table-employees" data-testid="table-employees">
+                        <thead>
+                            <tr>
+                                <th data-col="name">Name</th>
+                                <th data-col="role">Role</th>
+                                <th data-col="salary">Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-row="Alice">
+                                <td data-col="name">Alice</td>
+                                <td data-col="role">Engineer</td>
+                                <td data-col="salary">$95,000</td>
+                            </tr>
+                            <tr data-row="Bob">
+                                <td data-col="name">Bob</td>
+                                <td data-col="role">Designer</td>
+                                <td data-col="salary">$85,000</td>
+                            </tr>
+                            <tr data-row="Carol">
+                                <td data-col="name">Carol</td>
+                                <td data-col="role">Manager</td>
+                                <td data-col="salary">$110,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="table-employees"]
+Find row: //tr[@data-row="Bob"]
+Find cell: //tr[@data-row="Bob"]//td[@data-col="salary"]
+Assert: Text content "$85,000"
+Count rows: tbody tr (expect 3)
+Traverse: thead th for headers, tbody tr for data
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Lists</h4>
+                    <h5>Unordered List</h5>
+                    <ul id="list-todos" data-testid="list-todos">
+                        <li data-testid="todo-item-1">Write test cases</li>
+                        <li data-testid="todo-item-2">Execute automation suite</li>
+                        <li data-testid="todo-item-3">Review results</li>
+                    </ul>
+
+                    <h5>Ordered List</h5>
+                    <ol id="list-ordered-steps" data-testid="list-ordered-steps">
+                        <li data-testid="step-item-1">Identify element</li>
+                        <li data-testid="step-item-2">Perform action</li>
+                        <li data-testid="step-item-3">Assert outcome</li>
+                    </ol>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="list-todos"] li
+XPath: //ul[@data-testid="list-todos"]/li
+Count: Assert 3 items
+Order: Verify sequence by index or data-testid
+Text: Assert specific item text content
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 1.4 Advanced Inputs -->
+            <article id="advanced-inputs" aria-labelledby="heading-advanced-inputs">
+                <h3 id="heading-advanced-inputs">1.4 Advanced Inputs</h3>
+
+                <div class="demo-box">
+                    <h4>Select Dropdown</h4>
+                    <label for="select-country">Country:</label>
+                    <select id="select-country" name="country" data-testid="select-country">
+                        <option value="">-- Select --</option>
+                        <option value="us">United States</option>
+                        <option value="ca">Canada</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="de">Germany</option>
+                    </select>
+                    <p>Selected: <span data-testid="select-country-output">None</span></p>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="select-country"]
+Action: Select by visible text "Canada"
+        Select by value "ca"
+        Select by index 2
+Assert: Selected option text or value
+Output: [data-testid="select-country-output"]
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Date Picker – Method A (Direct Input)</h4>
+                    <label for="date-input">Date (YYYY-MM-DD):</label>
+                    <input type="text" 
+                           id="date-input" 
+                           name="date" 
+                           data-testid="date-input" 
+                           placeholder="YYYY-MM-DD"
+                           pattern="\d{4}-\d{2}-\d{2}">
+                    <p data-testid="date-input-feedback"></p>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="date-input"]
+Action: sendKeys("2025-10-16")
+Assert: value attribute, feedback message
+Validation: Strict format YYYY-MM-DD
+Error: Invalid format shows error message
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Date Picker – Method B (UI Picker)</h4>
+                    <button type="button" data-testid="date-open">Open Date Picker</button>
+                    <p>Selected: <span data-testid="date-selected-output">None</span></p>
+
+                    <div id="date-picker" data-testid="date-picker" class="date-picker" hidden>
+                        <div class="date-picker-header">
+                            <button type="button" data-testid="date-prev" aria-label="Previous month">◀</button>
+                            <span data-testid="date-month-year">October 2025</span>
+                            <button type="button" data-testid="date-next" aria-label="Next month">▶</button>
+                        </div>
+                        <div class="date-picker-grid" data-testid="date-picker-grid" role="grid">
+                            <!-- Days populated by JS -->
+                        </div>
+                    </div>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="date-open"]
+Action: click() to open picker
+Wait: [data-testid="date-picker"] visible
+Navigate: [data-testid="date-next"] for next month
+Select day: [data-day="15"] button
+Assert: [data-testid="date-selected-output"] text
+Deterministic: Fixed start date, predictable navigation
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Slider</h4>
+                    <label for="slider-volume">Volume:</label>
+                    <input type="range" 
+                           id="slider-volume" 
+                           name="volume" 
+                           min="0" 
+                           max="100" 
+                           value="50" 
+                           data-testid="slider-volume">
+                    <output data-testid="slider-volume-output">50</output>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="slider-volume"]
+Action: Set value attribute to "75"
+        Or use keyboard (Arrow keys)
+Assert: value attribute, output text
+Output: [data-testid="slider-volume-output"]
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Drag and Drop</h4>
+                    <div class="drag-drop-container">
+                        <div class="drag-source">
+                            <h5>Source</h5>
+                            <ul id="drag-source-list" data-testid="drag-source-list">
+                                <li draggable="true" data-testid="drag-source-item-1" data-item-id="1">Item 1</li>
+                                <li draggable="true" data-testid="drag-source-item-2" data-item-id="2">Item 2</li>
+                                <li draggable="true" data-testid="drag-source-item-3" data-item-id="3">Item 3</li>
+                            </ul>
+                        </div>
+                        <div class="drag-target">
+                            <h5>Target</h5>
+                            <ul id="drop-target-list" data-testid="drop-target-list">
+                                <!-- Items dropped here -->
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="note">Keyboard: Select item, press Move button</p>
+                    <button type="button" data-testid="btn-move-selected">Move Selected →</button>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="drag-source-item-1"]
+Action: dragAndDrop(source, target)
+        Or use Actions API
+Target: [data-testid="drop-target-list"]
+Assert: Item moved from source to target
+Keyboard fallback: Select + Move button
+Verify: Count items in both lists
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 1.5 File Handling -->
+            <article id="file-handling" aria-labelledby="heading-file">
+                <h3 id="heading-file">1.5 File Handling</h3>
+
+                <div class="demo-box">
+                    <h4>Standard File Input</h4>
+                    <label for="file-input-visible">Upload File:</label>
+                    <input type="file" 
+                           id="file-input-visible" 
+                           name="file" 
+                           data-testid="file-input-visible">
+                    <p data-testid="file-visible-output">No file selected</p>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="file-input-visible"]
+Action: sendKeys("/path/to/file.txt")
+Assert: files[0].name property
+Output: [data-testid="file-visible-output"]
+Note: No OS dialog; direct path assignment
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Hidden File Input (Custom Button)</h4>
+                    <button type="button" data-testid="btn-upload">Choose File</button>
+                    <input type="file" 
+                           id="file-input-hidden" 
+                           name="file-hidden" 
+                           data-testid="file-input-hidden" 
+                           hidden>
+                    <p data-testid="file-hidden-output">No file selected</p>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="file-input-hidden"]
+Strategy: Target hidden input directly
+Action: sendKeys("/path/to/document.pdf")
+Assert: files[0].name property
+Output: [data-testid="file-hidden-output"]
+Note: Bypass custom button; use hidden input
+                        </pre>
+                    </details>
+                </div>
+            </article>
+        </section>
+
+        <!-- SECTION 2: COMPLEX ARCHITECTURES -->
+        <section id="section-2" aria-labelledby="heading-section-2">
+            <h2 id="heading-section-2">2. Complex Architectures</h2>
+
+            <!-- 2.1 Iframes -->
+            <article id="iframe-demo" aria-labelledby="heading-iframe">
+                <h3 id="heading-iframe">2.1 Iframes</h3>
+
+                <div class="demo-box">
+                    <h4>Single Iframe</h4>
+                    <iframe data-testid="frame-parent" 
+                            title="Parent frame"
+                            srcdoc="<body style='font-family:monospace;padding:1rem;'><h4>Inside Iframe</h4><button data-testid='btn-frame-action'>Frame Button</button><p data-testid='frame-output'>Frame content</p></body>">
+                    </iframe>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="frame-parent"]
+Action: driver.switchTo().frame(element)
+Inside: [data-testid="btn-frame-action"]
+Assert: [data-testid="frame-output"] text
+Exit: driver.switchTo().defaultContent()
+Note: Must switch context before interacting
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Nested Iframes</h4>
+                    <iframe data-testid="frame-outer" 
+                            title="Outer frame"
+                            srcdoc="<body style='font-family:monospace;padding:1rem;'><h4>Outer Frame</h4><p>This contains a nested frame:</p><iframe data-testid='frame-inner' title='Inner frame' srcdoc='<body style=&quot;font-family:monospace;padding:1rem;&quot;><h5>Inner Frame</h5><input type=&quot;text&quot; data-testid=&quot;input-nested&quot; placeholder=&quot;Nested input&quot;></body>'></iframe></body>">
+                    </iframe>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="frame-outer"]
+Action: driver.switchTo().frame(outerFrame)
+Then: driver.switchTo().frame(innerFrame)
+Target: [data-testid="input-nested"]
+Assert: Input is interactable
+Exit: driver.switchTo().defaultContent()
+Note: Switch to each frame in sequence
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 2.2 Shadow DOM -->
+            <article id="shadow-demo" aria-labelledby="heading-shadow">
+                <h3 id="heading-shadow">2.2 Shadow DOM</h3>
+
+                <div class="demo-box">
+                    <h4>Custom Web Component with Shadow Root</h4>
+                    <shadow-login-card data-testid="shadow-host"></shadow-login-card>
+                    <p data-testid="shadow-result-output"></p>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="shadow-host"]
+Action: shadowRoot = element.shadowRoot (Selenium 4+)
+        Or executeScript("return arguments[0].shadowRoot", el)
+Inside: shadowRoot.querySelector('[data-testid="shadow-username"]')
+Fill: sendKeys("testuser")
+Submit: [data-testid="shadow-login"] button
+Assert: [data-testid="shadow-result-output"] in main DOM
+Note: Must pierce shadow boundary
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 2.3 Canvas -->
+            <article id="canvas-demo" aria-labelledby="heading-canvas">
+                <h3 id="heading-canvas">2.3 Canvas</h3>
+
+                <div class="demo-box">
+                    <h4>Canvas Interaction & Visual Regression</h4>
+                    <canvas id="canvas-chart" 
+                            data-testid="canvas-chart" 
+                            width="400" 
+                            height="200"
+                            role="img"
+                            aria-label="Bar chart showing three values">
+                    </canvas>
+                    <p data-testid="canvas-click-output">Click a bar to see its value</p>
+                    <button type="button" data-testid="btn-canvas-snapshot">Run Visual Check</button>
+                    <p data-testid="canvas-diff-output"></p>
+
+                    <!-- Baseline image (embedded as data URI) -->
+                    <img id="baseline-img" 
+                         data-testid="baseline-img" 
+                         alt="Baseline canvas image"
+                         style="display:none;"
+                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAADICAYAAADGFbfiAAAACXBIWXMAAAsTAAALEwEAmpwYAAADGklEQVR4nO3TMQ0AAAjAMPD/0HbgCBCQdXbOzALg5/p6AIDfEBAAEQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAAQEBEBEQABEBARAREAARAQEQERAAgQdWowCX4yW9owAAAABJRU5ErkJggg==">
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="canvas-chart"]
+Coordinate click: Actions.moveToElement(canvas, x, y).click()
+Assert: [data-testid="canvas-click-output"] text changes
+Visual check: [data-testid="btn-canvas-snapshot"]
+Compare: Canvas pixels vs baseline image
+Tolerance: Pixel diff threshold (e.g., 5%)
+Output: [data-testid="canvas-diff-output"]
+Note: Use screenshot comparison tools in real tests
+                        </pre>
+                    </details>
+                </div>
+            </article>
+        </section>
+
+        <!-- SECTION 3: COMMON AUTOMATION CHALLENGES -->
+        <section id="section-3" aria-labelledby="heading-section-3">
+            <h2 id="heading-section-3">3. Common Automation Challenges</h2>
+
+            <!-- 3.1 Locator Strategies -->
+            <article id="locator-strategies" aria-labelledby="heading-locators">
+                <h3 id="heading-locators">3.1 Locator Hierarchy & Best Practices</h3>
+
+                <div class="demo-box">
+                    <h4>Locator Priority</h4>
+                    <div class="locator-example" 
+                         id="locator-demo" 
+                         data-testid="locator-demo" 
+                         data-name="example">
+                        <p>This element demonstrates multiple locator strategies:</p>
+                        <ul>
+                            <li><strong>1. data-testid</strong> (preferred): <code>[data-testid="locator-demo"]</code></li>
+                            <li><strong>2. id</strong>: <code>#locator-demo</code></li>
+                            <li><strong>3. name</strong>: <code>[name="example"]</code> (for inputs)</li>
+                            <li><strong>4. CSS</strong>: <code>.locator-example</code></li>
+                            <li><strong>5. XPath</strong>: <code>//div[@data-testid="locator-demo"]</code></li>
+                        </ul>
+                    </div>
+
+                    <h5>Partial Match Strategies</h5>
+                    <button data-testid="btn-submit-form-2025">Submit Form 2025</button>
+                    <p>Partial matches:</p>
+                    <ul>
+                        <li><strong>Starts with</strong>: <code>[data-testid^="btn-submit"]</code></li>
+                        <li><strong>Ends with</strong>: <code>[data-testid$="2025"]</code></li>
+                        <li><strong>Contains</strong>: <code>[data-testid*="submit-form"]</code></li>
+                        <li><strong>XPath contains</strong>: <code>//button[contains(@data-testid, "submit")]</code></li>
+                    </ul>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+Priority order:
+1. data-testid (stable, explicit)
+2. id (unique, but may change)
+3. name (for form elements)
+4. Semantic CSS (role, type)
+5. XPath (last resort, brittle)
+
+Avoid: Generated classes, deep nesting, text-only
+Use: Partial matches for dynamic IDs
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 3.2 Synchronization -->
+            <article id="synchronization" aria-labelledby="heading-sync">
+                <h3 id="heading-sync">3.2 Synchronization & Explicit Waits</h3>
+
+                <div class="demo-box">
+                    <h4>Explicit Wait Demo</h4>
+                    <button type="button" data-testid="btn-trigger-async">Trigger Async Action</button>
+                    <div data-testid="async-spinner" class="spinner" hidden>Processing...</div>
+                    <div data-testid="async-result" class="alert alert-success" hidden>Action completed successfully!</div>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="btn-trigger-async"]
+Action: click()
+Wait: [data-testid="async-spinner"] visible
+Duration: 1200ms (fixed, deterministic)
+Then wait: [data-testid="async-spinner"] hidden
+Assert: [data-testid="async-result"] visible
+Anti-pattern: Thread.sleep(2000) ❌
+Best practice: WebDriverWait.until(visibilityOf(...)) ✓
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>SPA Content Loading</h4>
+                    <button type="button" data-testid="btn-load-content">Load Content</button>
+                    <div data-testid="spa-content" hidden>
+                        <p>This content loaded asynchronously.</p>
+                    </div>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="btn-load-content"]
+Action: click()
+Wait: [data-testid="spa-content"] visible (no hidden attr)
+Assert: Text content present
+Sync: Wait for specific element, not page load
+Timeout: Configure explicit wait (e.g., 10s)
+                        </pre>
+                    </details>
+                </div>
+            </article>
+
+            <!-- 3.3 Flakiness & Retries -->
+            <article id="flakiness" aria-labelledby="heading-flakiness">
+                <h3 id="heading-flakiness">3.3 Flakiness Lab & Retry Strategies</h3>
+
+                <div class="demo-box">
+                    <h4>Controlled Retry Demo</h4>
+                    <p>This demo simulates a transient failure on first attempt.</p>
+                    <button type="button" data-testid="btn-flaky-action">Flaky Action</button>
+                    <div data-testid="flaky-spinner" class="spinner" hidden>Attempting...</div>
+                    <div data-testid="flaky-error" class="alert alert-error" hidden>Transient error (retry needed)</div>
+                    <div data-testid="flaky-success" class="alert alert-success" hidden>Success on retry!</div>
+                    <p data-testid="flaky-attempt-count">Attempts: 0</p>
+
+                    <details>
+                        <summary>How to automate</summary>
+                        <pre>
+CSS: [data-testid="btn-flaky-action"]
+First attempt: Shows error [data-testid="flaky-error"]
+Retry: Click again
+Second attempt: Shows success [data-testid="flaky-success"]
+Strategy: Implement retry logic (max 3 attempts)
+Assert: [data-testid="flaky-attempt-count"] increments
+Best practice: Idempotent actions, clean state between retries
+                        </pre>
+                    </details>
+                </div>
+
+                <div class="demo-box">
+                    <h4>Environment Stability Notes</h4>
+                    <ul>
+                        <li><strong>Isolation</strong>: Each test should reset state (clear cookies, local storage)</li>
+                        <li><strong>Mocks/Stubs</strong>: Replace external APIs with deterministic responses</li>
+                        <li><strong>Containers</strong>: Use Docker for consistent test environments</li>
+                        <li><strong>Data</strong>: Seed known test data; avoid shared mutable state</li>
+                        <li><strong>Timing</strong>: Use explicit waits; avoid hardcoded sleeps</li>
+                    </ul>
+                </div>
+            </article>
+        </section>
+
+        <!-- SECTION 4: COMPETENCY CHECKLIST -->
+        <section id="section-4" aria-labelledby="heading-section-4">
+            <h2 id="heading-section-4">4. Competency Checklist</h2>
+
+            <article id="competency-table" aria-labelledby="heading-competency">
+                <h3 id="heading-competency">Situation → Competency → Techniques</h3>
+
+                <table id="table-competency" data-testid="table-competency">
+                    <thead>
+                        <tr>
+                            <th data-col="situation">Situation</th>
+                            <th data-col="competency">Required Competency</th>
+                            <th data-col="techniques">Techniques / Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-row="basic-forms">
+                            <td data-col="situation">Filling forms with validation</td>
+                            <td data-col="competency">Input interaction, assertion</td>
+                            <td data-col="techniques">sendKeys, getAttribute, explicit waits</td>
+                        </tr>
+                        <tr data-row="dynamic-content">
+                            <td data-col="situation">Dynamic content loading (SPA)</td>
+                            <td data-col="competency">Synchronization</td>
+                            <td data-col="techniques">WebDriverWait, visibilityOf, presenceOf</td>
+                        </tr>
+                        <tr data-row="iframes">
+                            <td data-col="situation">Interacting with iframes</td>
+                            <td data-col="competency">Context switching</td>
+                            <td data-col="techniques">switchTo().frame(), defaultContent()</td>
+                        </tr>
+                        <tr data-row="shadow-dom">
+                            <td data-col="situation">Shadow DOM components</td>
+                            <td data-col="competency">Shadow root access</td>
+                            <td data-col="techniques">getShadowRoot(), executeScript</td>
+                        </tr>
+                        <tr data-row="canvas">
+                            <td data-col="situation">Canvas interactions</td>
+                            <td data-col="competency">Coordinate-based actions, visual testing</td>
+                            <td data-col="techniques">Actions API, screenshot comparison</td>
+                        </tr>
+                        <tr data-row="file-upload">
+                            <td data-col="situation">File uploads (hidden inputs)</td>
+                            <td data-col="competency">Direct input targeting</td>
+                            <td data-col="techniques">sendKeys to hidden input, bypass UI</td>
+                        </tr>
+                        <tr data-row="drag-drop">
+                            <td data-col="situation">Drag and drop</td>
+                            <td data-col="competency">Advanced actions</td>
+                            <td data-col="techniques">Actions.dragAndDrop(), keyboard fallback</td>
+                        </tr>
+                        <tr data-row="flaky-tests">
+                            <td data-col="situation">Flaky tests</td>
+                            <td data-col="competency">Retry logic, environment stability</td>
+                            <td data-col="techniques">Retry decorators, mocks, containers</td>
+                        </tr>
+                        <tr data-row="locators">
+                            <td data-col="situation">Brittle locators</td>
+                            <td data-col="competency">Resilient selector strategy</td>
+                            <td data-col="techniques">data-testid, semantic HTML, avoid generated classes</td>
+                        </tr>
+                        <tr data-row="accessibility">
+                            <td data-col="situation">Accessibility testing</td>
+                            <td data-col="competency">ARIA, keyboard navigation</td>
+                            <td data-col="techniques">axe-core, manual keyboard tests, screen readers</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <details>
+                    <summary>How to automate</summary>
+                    <pre>
+CSS: [data-testid="table-competency"]
+Find row: //tr[@data-row="shadow-dom"]
+Find cell: //tr[@data-row="shadow-dom"]//td[@data-col="techniques"]
+Assert: Text content matches expected techniques
+Count rows: tbody tr (expect 10)
+Traverse: Verify all situations covered
+                    </pre>
+                </details>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <h2>Testing Notes & Accessibility</h2>
+        <ul>
+            <li><strong>Keyboard shortcuts</strong>: Tab (navigate), Enter/Space (activate), Escape (close modals/menus), Arrow keys (tabs/menus)</li>
+            <li><strong>Focus management</strong>: All interactive elements have visible focus outlines</li>
+            <li><strong>ARIA</strong>: Roles, states, and properties used throughout (aria-expanded, aria-controls, aria-selected, aria-modal)</li>
+            <li><strong>Determinism</strong>: All timeouts are fixed (1200ms for spinners); no randomness</li>
+            <li><strong>Selectors</strong>: Every interactive element has a unique data-testid</li>
+            <li><strong>Synchronization</strong>: Use explicit waits targeting spinners and content visibility</li>
+            <li><strong>Isolation</strong>: Each demo is independent; no shared state</li>
+        </ul>
+        <p>&copy; 2025 The Modern Web Automation Tester's Handbook. All demos are production-ready and test-stable.</p>
+    </footer>
+</body>
+</html>
