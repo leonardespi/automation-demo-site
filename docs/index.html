@@ -1100,69 +1100,17 @@ Best practice: Idempotent actions, clean state between retries
               >
             </details>
           </div>
-
-          <div class="demo-box">
-            <h4>Environment Stability Notes</h4>
-            <ul>
-              <li>
-                <strong>Isolation</strong>: Each test should reset state (clear
-                cookies, local storage)
-              </li>
-              <li>
-                <strong>Mocks/Stubs</strong>: Replace external APIs with
-                deterministic responses
-              </li>
-              <li>
-                <strong>Containers</strong>: Use Docker for consistent test
-                environments
-              </li>
-              <li>
-                <strong>Data</strong>: Seed known test data; avoid shared
-                mutable state
-              </li>
-              <li>
-                <strong>Timing</strong>: Use explicit waits; avoid hardcoded
-                sleeps
-              </li>
-            </ul>
-          </div>
         </article>
       </section>
     </main>
 
-    <footer>
-      <h2>Testing Notes & Accessibility</h2>
-      <ul>
-        <li>
-          <strong>Keyboard shortcuts</strong>: Tab (navigate), Enter/Space
-          (activate), Escape (close modals/menus), Arrow keys (tabs/menus)
-        </li>
-        <li>
-          <strong>Focus management</strong>: All interactive elements have
-          visible focus outlines
-        </li>
-        <li>
-          <strong>ARIA</strong>: Roles, states, and properties used throughout
-          (aria-expanded, aria-controls, aria-selected, aria-modal)
-        </li>
-        <li>
-          <strong>Determinism</strong>: All timeouts are fixed (1200ms for
-          spinners); no randomness
-        </li>
-        <li>
-          <strong>Selectors</strong>: Every interactive element has a unique
-          data-testid
-        </li>
-        <li>
-          <strong>Synchronization</strong>: Use explicit waits targeting
-          spinners and content visibility
-        </li>
-        <li>
-          <strong>Isolation</strong>: Each demo is independent; no shared state
-        </li>
-      </ul>
-      <p>
-        &copy; 2025 The Automation Demo Site. <a href="www.leonardespi.me" target="_blank" rel="noopener">leonardespi</a></p>
+    <footer style="padding-top: 3em; padding-bottom: 3em; display: flex; justify-content: center;">
+      <p >
+        &copy; 2025 The Automation Demo Site.
+        <a href="www.leonardespi.me" target="_blank" rel="noopener"
+          >leonardespi</a
+        >
+      </p>
     </footer>
   </body>
 </html>
