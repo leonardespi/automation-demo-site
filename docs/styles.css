@@ -232,11 +232,6 @@ button:hover:not(:disabled) {
     color: #fff;
 }
 
-button:focus {
-    outline: 2px solid #000;
-    outline-offset: 2px;
-}
-
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -286,21 +281,25 @@ ol[data-testid] {
 
 .alert {
     padding: 0.75rem;
-    border: 2px solid #000;
+    border: 2px solid #2e2e2e;   
     margin-bottom: 1rem;
 }
 
 .alert-success {
     border-style: solid;
+    border-color: #8cc57e;         
+    color: #8cc57e;
 }
 
 .alert-error {
     border-style: dashed;
+    border-color: #c46666;    
+    color: #c46666      
 }
 
 .spinner {
     padding: 0.75rem;
-    border: 2px solid #000;
+    border: 2px solid #2e2e2e;     
     margin-bottom: 1rem;
     text-align: center;
 }
@@ -372,7 +371,7 @@ ol[data-testid] {
 [role="tabpanel"] {
     padding: 1rem;
     border: 1px solid #000;
-    border-top: none;
+    border-top: 1px solid #000;
 }
 
 /* ===========================
@@ -599,10 +598,7 @@ details pre {
    FOCUS STYLES
    =========================== */
 
-*:focus {
-    outline: 2px solid #000;
-    outline-offset: 2px;
-}
+
 
 /* ===========================
    RESPONSIVE
